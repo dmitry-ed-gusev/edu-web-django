@@ -17,7 +17,8 @@ Including another URLconf
 import os
 from django.contrib import admin
 from django.urls import include, path
-from django.conf.urls import url
+# from django.conf.urls import url
+from django.urls import re_path
 from django.views.static import serve
 from django.views.generic import TemplateView
 
@@ -26,11 +27,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_ROOT = os.path.join(BASE_DIR, 'site')
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='home/main.html')),  # main application page - for the URI -> /
+    path('', TemplateView.as_view(template_name='home/main.html')),  # main app page - for the URI -> /
     path('polls/', include('polls.urls')),  # /polls - application
     path('admin/', admin.site.urls),  # /admin - application
-    url(r'^site/(?P<path>.*)$', serve,
-        {'document_root': SITE_ROOT, 'show_indexes': True},
-        name='site_path'
-    ),  # serve static content by address /site
+    re_path(r'^site/(?P<path>.*)$', serve,
+            {'document_root': SITE_ROOT, 'show_indexes': True},
+            name='site_path'
+            ),  # serve static content by address /site
 ]
