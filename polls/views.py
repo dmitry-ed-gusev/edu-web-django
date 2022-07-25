@@ -9,24 +9,24 @@ from django.views import generic
 
 from .models import Question, Choice
 
-# Create your views here.
 
-#def index(request):
+# def index(request):
 #    # return HttpResponse("Hello, world. You're at the polls index. The number: 64126291!")
 #    latest_question_list = Question.objects.order_by('-pub_date')[:5]
 #    context = {'latest_question_list': latest_question_list}
 #    return render(request, 'polls/index.html', context)
 
+
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
-    
+
     def get_queryset(self):
         """Return the last five published questions."""
         return Question.objects.order_by('-pub_date')[:5]
 
 
-#def detail(request, question_id):
+# def detail(request, question_id):
 #    # try:
 #    #     question = Question.objects.get(pk=question_id)
 #    # except Question.DoesNotExist:
@@ -40,7 +40,7 @@ class DetailView(generic.DetailView):
     template_name = 'polls/detail.html'
 
 
-#def results(request, question_id):
+# def results(request, question_id):
 #    question = get_object_or_404(Question, pk=question_id)
 #    return render(request, 'polls/results.html', {'question': question})
 #    # response = "You're looking at the [3c3d2bb7] results of question %s."
@@ -71,18 +71,20 @@ def vote(request, question_id):
 
 
 def owner(request):
-    return HttpResponse("Hello, world. 3c3d2bb7 is the polls owner.")
+    # return HttpResponse("Hello, world. 3c3d2bb7 is the polls owner.")
+    return HttpResponse("Hello, world. 4293b9e4 is the polls owner.")
 
 
 # Call as dumpdata('GET', request.GET)
-def dumpdata(place, data) :
+def dumpdata(place, data):
     retval = ""
-    if len(data) > 0 :
+    if len(data) > 0:
         retval += '<p>Incoming '+place+' data:<br/>\n'
         for key, value in data.items():
             retval += html.escape(key) + '=' + html.escape(value) + '</br>\n'
         retval += '</p>\n'
     return retval
+
 
 def getform(request):
     response = """<p>Impossible GET guessing game...</p>
@@ -93,6 +95,7 @@ def getform(request):
         </form>"""
     response += dumpdata('GET', request.GET)
     return HttpResponse(response)
+
 
 @csrf_exempt
 def postform(request):
