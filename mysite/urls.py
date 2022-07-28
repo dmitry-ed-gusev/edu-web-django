@@ -30,11 +30,18 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='home/main.html')),  # main app page - for the URI -> /
     path('polls/', include('polls.urls')),  # /polls - application
     path('hello/', include('hello.urls')),  # /hello - application
+
+    # see more: django doc
     path('admin/', admin.site.urls),  # /admin - application (django internal)
+
+    #  see more: https://docs.djangoproject.com/en/3.2/topics/auth/default/#module-django.contrib.auth.views
     path('accounts/', include('django.contrib.auth.urls')),  # django usual login/logout urls
+
     re_path(r'^site/(?P<path>.*)$', serve,
             {'document_root': SITE_ROOT, 'show_indexes': True},
             name='site_path'
             ),  # serve static content by address /site
+
     path('ships/', include('ships.urls')),  # /ships - application with CRUD implemented
+    path('autos/', include('autos.urls')),  # /autos - application for dj4e course assessment (CRUD app)
 ]

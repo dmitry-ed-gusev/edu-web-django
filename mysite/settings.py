@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'home.apps.HomeConfig',
     'ships.apps.ShipsConfig',
+    'autos.apps.AutosConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -127,3 +128,82 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# logging configuration for django, see more:
+#   - https://docs.djangoproject.com/en/4.0/topics/logging/
+#   - 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+
+    "formatters": {  # logging formatters
+
+        "standard": {  # standard log format
+            "format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+        },
+        "simple": {  # usually used log format
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        },
+
+    },  # end of formatters block
+
+    "handlers": {  # logging handlers
+
+        "default": {  # default handler (for emergency cases)
+            "level": "DEBUG",
+            "formatter": "standard",
+            "class": "logging.StreamHandler",
+            "stream": "ext://sys.stdout",  # Default is stderr
+        },
+
+        "console": {  # usual console handler
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",
+            "formatter": "simple",
+            "stream": "ext://sys.stdout",
+        },
+
+        "std_file_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "DEBUG",
+            "formatter": "simple",
+            "filename": str(BASE_DIR) + "/log_info.log",
+            "maxBytes": 10485760,  # 10MB
+            "backupCount": 20,
+            "encoding": "UTF-8",
+        },
+
+        "error_file_handler": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "ERROR",
+            "formatter": "simple",
+            "filename": str(BASE_DIR) + "/log_errors.log",
+            "maxBytes": 10485760,  # 10MB
+            "backupCount": 20,
+            "encoding": "UTF-8",
+        },
+
+    },  # end of handlers block
+
+    "loggers": {  # defining logger block
+
+        "rallytool": {  # todo: logger for some library used
+            # 'handlers': ['default'],
+            "level": "DEBUG",
+            # 'propagate': False
+        },
+
+        "__main__": {  # if __name__ == '__main__' - emergency case!!!
+            "handlers": ["default"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+
+    },  # end of loggers module
+
+    "root": {  # root logger
+        "level": "INFO",  # todo: should be WARNING for PROD?
+        "handlers": ["console", "std_file_handler", "error_file_handler"],
+    },
+
+}
