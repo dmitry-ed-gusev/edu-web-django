@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -131,7 +132,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # logging configuration for django, see more:
 #   - https://docs.djangoproject.com/en/4.0/topics/logging/
-#   - 
+#   - https://docs.djangoproject.com/en/4.0/ref/logging/#default-logging-configuration
+#   - https://docs.djangoproject.com/en/4.0/howto/logging/#logging-how-to
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -141,8 +143,14 @@ LOGGING = {
         "standard": {  # standard log format
             "format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
         },
+
         "simple": {  # usually used log format
             "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        },
+
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
         },
 
     },  # end of formatters block
@@ -187,6 +195,12 @@ LOGGING = {
 
     "loggers": {  # defining logger block
 
+        'django': {  # dedicated django logger - log only to console
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+
         "rallytool": {  # todo: logger for some library used
             # 'handlers': ['default'],
             "level": "DEBUG",
@@ -202,7 +216,7 @@ LOGGING = {
     },  # end of loggers module
 
     "root": {  # root logger
-        "level": "INFO",  # todo: should be WARNING for PROD?
+        "level": "DEBUG",  # todo: should be WARNING for PROD?
         "handlers": ["console", "std_file_handler", "error_file_handler"],
     },
 
