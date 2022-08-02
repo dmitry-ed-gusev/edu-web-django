@@ -7,7 +7,7 @@ app_name = 'autos'
 urlpatterns = [
     path('info/', views.autoview),
 
-    path('', views.MainView.as_view(), name='all'),
+    path('', views.MainView.as_view(), name='all_autos'),
     path('main/create/', views.AutoCreate.as_view(), name='auto_create'),
     path('main/<int:pk>/update/', views.AutoUpdate.as_view(), name='auto_update'),
     path('main/<int:pk>/delete/', views.AutoDelete.as_view(), name='auto_delete'),

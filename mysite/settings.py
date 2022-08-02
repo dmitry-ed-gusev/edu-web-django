@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'ships.apps.ShipsConfig',
     'autos.apps.AutosConfig',
+    'cats.apps.CatsConfig',
     # - django applications
     'django.contrib.admin',
     'django.contrib.auth',

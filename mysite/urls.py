@@ -17,8 +17,8 @@ Including another URLconf
 import os
 from django.contrib import admin
 from django.urls import include, path
-# from django.conf.urls import url
-from django.urls import re_path
+# from django.conf.urls import url  # <- django 3.x
+from django.urls import re_path  # <- django 4.x
 from django.views.static import serve
 from django.views.generic import TemplateView
 
@@ -31,17 +31,20 @@ urlpatterns = [
     path('polls/', include('polls.urls')),  # /polls - application
     path('hello/', include('hello.urls')),  # /hello - application
 
-    # see more: django doc
+    # django embedded admin application (see more: django doc)
     path('admin/', admin.site.urls),  # /admin - application (django internal)
 
-    #  see more: https://docs.djangoproject.com/en/3.2/topics/auth/default/#module-django.contrib.auth.views
+    # django embedded login/logout capability
+    # see more: https://docs.djangoproject.com/en/3.2/topics/auth/default/#module-django.contrib.auth.views
     path('accounts/', include('django.contrib.auth.urls')),  # django usual login/logout urls
 
+    # processing the static content
     re_path(r'^site/(?P<path>.*)$', serve,
             {'document_root': SITE_ROOT, 'show_indexes': True},
             name='site_path'
             ),  # serve static content by address /site
 
     path('ships/', include('ships.urls')),  # /ships - application with CRUD implemented
-    path('autos/', include('autos.urls')),  # /autos - application for dj4e course assessment (CRUD app)
+    path('autos/', include('autos.urls')),  # /autos - CRUD app for dj4e course assessment (week #3)
+    path('cats/', include('cats.urls')),  # /cats - CRUD app for dj4e course assessment (week #4)
 ]
