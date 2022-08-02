@@ -32,16 +32,21 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    # - my own applications
     'polls.apps.PollsConfig',
     'home.apps.HomeConfig',
     'ships.apps.ShipsConfig',
     'autos.apps.AutosConfig',
+    # - django applications
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # - extensions (django etc.)
+    'django_extensions',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
