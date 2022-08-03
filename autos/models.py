@@ -3,11 +3,13 @@ from django.db import models
 from django.db.models.signals import post_init, pre_init
 from django.core.validators import MinLengthValidator
 
+from utils.utils import log_model_init
+
 log = logging.getLogger(__name__)
 
 
 class Make(models.Model):
-    log.debug('Models: class Make (static call)')
+    # log.debug('Models: class Make (static call)')
 
     name = models.CharField(
             max_length=200,
@@ -21,7 +23,7 @@ class Make(models.Model):
 
 
 class Auto(models.Model):
-    log.debug('Models: class Auto (static call)')
+    # log.debug('Models: class Auto (static call)')
 
     nickname = models.CharField(
             max_length=200,
@@ -34,11 +36,6 @@ class Auto(models.Model):
     # Shows up in the admin list
     def __str__(self):
         return self.nickname
-
-
-def log_model_init(**kwargs):
-    instance = kwargs.get('instance')
-    log.debug(f'Model instance created: {instance.__class__.__name__}.')
 
 
 post_init.connect(log_model_init, Make)

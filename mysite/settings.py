@@ -207,6 +207,10 @@ LOGGING = {
             'propagate': False,
         },
 
+        'parso': {  # django shell parser/autocomplete, it worth to have it upper DEBUG
+            'level': 'INFO',  # todo: set to WARN?
+        },
+
         "rallytool": {  # todo: logger for some library used
             # 'handlers': ['default'],
             "level": "DEBUG",
