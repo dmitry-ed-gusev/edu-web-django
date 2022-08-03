@@ -9,8 +9,8 @@
     {% for cat in cats_list %} {# iterate over the cats list and show each cat in the list #}
       <li>
           {{ cat.nickname }} ({{ cat.breed }})
-          {#(<a href="{% url 'autos:auto_update' auto.id %}">Update</a> |
-          <a href="{% url 'autos:auto_delete' auto.id %}">Delete</a>) <br/>#}
+          (<a href="{% url 'cats:cat_update' cat.id %}">Update</a> |
+          <a href="{% url 'cats:cat_delete' cat.id %}">Delete</a>) <br/>
           food: {{ cat.foods }} (weight: {{ cat.weight }} kg)
       </li>
     {% endfor %}
@@ -19,8 +19,9 @@
     <p>There are no cats in the library.</p>
   {% endif %}
 
+{% comment "fix and uncomment" %}
+
 {# link - add a cat #}
-{#
   <p>
     {% if make_count > 0 %}
       <a href="{% url 'autos:auto_create' %}">Add an auto</a>
@@ -28,14 +29,13 @@
       Please add a make before you add an auto.
     {% endif %}
   </p>
-#}
 
 {# links - view breeds/add breed #}
-{#
   <p>
     <a href="{% url 'autos:make_list' %}">View makes</a> ({{ make_count }}) | 
     <a href="{% url 'autos:make_create' %}">Add a make</a>
   </p>
-#}
+
+{% endcomment %}
 
 {% endblock %}

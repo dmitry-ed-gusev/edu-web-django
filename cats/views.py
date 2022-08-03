@@ -1,10 +1,10 @@
-from ctypes import cast
 import logging
 from django.urls import reverse_lazy
 from django.views import View
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from cats.forms import MakeForm
 from cats.models import Breed, Cat
@@ -18,7 +18,7 @@ def autoview(request):
     return response
 
 
-class MainCatsView(LoginRequiredMixin, View):
+class MainCatsView(LoginRequiredMixin, View):  # all cats main view
 
     def get(self, request):
         log.debug('MainCatsView: get() is working.')
@@ -33,11 +33,38 @@ class MainCatsView(LoginRequiredMixin, View):
         return render(request, 'cats/cat_list.html', ctx)
 
 
-# class MakeView(LoginRequiredMixin, View):
-#     def get(self, request):
-#         ml = Make.objects.all()
-#         ctx = {'make_list': ml}
-#         return render(request, 'autos/make_list.html', ctx)
+# Take the easy way out on the main table. These views do not need a form (see it for breeds)
+# because CreateView, etc. Build a form object dynamically based on the fields value in the
+# constructor attributes.
+# ---
+# We use reverse_lazy() rather than reverse in the class attributes because views.py is loaded by urls.py
+# and in urls.py as_view() causes the constructor for the view class to run before urls.py has been
+# completely loaded and urlpatterns has been processed.
+# See: https://docs.djangoproject.com/en/3.0/ref/class-based-views/generic-editing/#createview
+
+class CatCreate(LoginRequiredMixin, CreateView):
+    model = Cat
+    fields = '__all__'
+    success_url = reverse_lazy('cats:all_cats_list')
+
+
+class CatUpdate(LoginRequiredMixin, UpdateView):
+    model = Cat
+    fields = '__all__'
+    success_url = reverse_lazy('cats:all_cats_list')
+
+
+class CatDelete(LoginRequiredMixin, DeleteView):
+    model = Cat
+    fields = '__all__'
+    success_url = reverse_lazy('cats:all_cats_list')
+
+
+class BreedsView(LoginRequiredMixin, View):  # all breeds view
+    def get(self, request):
+        ml = Breed.objects.all()
+        ctx = {'make_list': ml}
+        return render(request, 'cats/breeds_list.html', ctx)
 
 
 # # We use reverse_lazy() because we are in "constructor attribute" code

@@ -23,7 +23,7 @@ class Cat(models.Model):
             max_length=200,
             validators=[MinLengthValidator(2, "Nickname must be greater than 1 character")]
     )
-    # weight = models.PositiveIntegerField()
+    # weight = models.PositiveIntegerField()  # this type is not suitable for the values from CSV
     weight = models.FloatField()
     foods = models.CharField(max_length=300)
     breed = models.ForeignKey('Breed', on_delete=models.CASCADE, null=False)

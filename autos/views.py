@@ -39,7 +39,7 @@ class MakeView(LoginRequiredMixin, View):
 # that is run before urls.py is completely loaded
 class MakeCreate(LoginRequiredMixin, View):
     template = 'autos/make_form.html'
-    success_url = reverse_lazy('autos:all')
+    success_url = reverse_lazy('autos:all_autos')
 
     def get(self, request):
         form = MakeForm()
@@ -61,7 +61,7 @@ class MakeCreate(LoginRequiredMixin, View):
 # and no form by extending UpdateView
 class MakeUpdate(LoginRequiredMixin, View):
     model = Make
-    success_url = reverse_lazy('autos:all')
+    success_url = reverse_lazy('autos:all_autos')
     template = 'autos/make_form.html'
 
     def get(self, request, pk):
@@ -83,7 +83,7 @@ class MakeUpdate(LoginRequiredMixin, View):
 
 class MakeDelete(LoginRequiredMixin, View):
     model = Make
-    success_url = reverse_lazy('autos:all')
+    success_url = reverse_lazy('autos:all_autos')
     template = 'autos/make_confirm_delete.html'
 
     def get(self, request, pk):
@@ -105,19 +105,19 @@ class MakeDelete(LoginRequiredMixin, View):
 class AutoCreate(LoginRequiredMixin, CreateView):
     model = Auto
     fields = '__all__'
-    success_url = reverse_lazy('autos:all')
+    success_url = reverse_lazy('autos:all_autos')
 
 
 class AutoUpdate(LoginRequiredMixin, UpdateView):
     model = Auto
     fields = '__all__'
-    success_url = reverse_lazy('autos:all')
+    success_url = reverse_lazy('autos:all_autos')
 
 
 class AutoDelete(LoginRequiredMixin, DeleteView):
     model = Auto
     fields = '__all__'
-    success_url = reverse_lazy('autos:all')
+    success_url = reverse_lazy('autos:all_autos')
 
 # We use reverse_lazy rather than reverse in the class attributes
 # because views.py is loaded by urls.py and in urls.py as_view() causes

@@ -9,15 +9,27 @@ urlpatterns = [
     # info view - just to proof that /cats appis working
     path('info/', views.autoview),
 
-    # main view - show all cats
-    path('', views.MainCatsView.as_view(), name='all_cats_list'),
+    # -- Cats urls - CRUD
 
-    # path('main/create/', views.AutoCreate.as_view(), name='auto_create'),
-    # path('main/<int:pk>/update/', views.AutoUpdate.as_view(), name='auto_update'),
-    # path('main/<int:pk>/delete/', views.AutoDelete.as_view(), name='auto_delete'),
-    # path('lookup/', views.MakeView.as_view(), name='make_list'),
-    # path('lookup/create/', views.MakeCreate.as_view(), name='make_create'),
-    # path('lookup/<int:pk>/update/', views.MakeUpdate.as_view(), name='make_update'),
-    # path('lookup/<int:pk>/delete/', views.MakeDelete.as_view(), name='make_delete'),
+    # main view for the cats app - show all cats
+    path('', views.MainCatsView.as_view(), name='all_cats_list'),
+    # create cat url/view
+    path('main/create/', views.CatCreate.as_view(), name='cat_create'),
+    # update cat url/view
+    path('main/<int:pk>/update/', views.CatUpdate.as_view(), name='cat_update'),
+    # delete cat
+    path('main/<int:pk>/delete/', views.CatDelete.as_view(), name='cat_delete'),
+
+
+    # -- Breeds urls - CRUD
+
+    # list of breeds
+    path('lookup/', views.BreedsView.as_view(), name='breeds_list'),
+    # create breed
+    path('lookup/create/', views.BreedCreate.as_view(), name='breed_create'),
+    # update breed
+    path('lookup/<int:pk>/update/', views.BreedUpdate.as_view(), name='breed_update'),
+    # delete breed
+    path('lookup/<int:pk>/delete/', views.BreedDelete.as_view(), name='breed_delete'),
 
 ]
