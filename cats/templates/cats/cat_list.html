@@ -1,6 +1,7 @@
 {% extends "base_bootstrap.html" %}
 
 {% block content %}
+
   <h1>Cats List</h1>
 
 {# render and show cats list (if any) #}
@@ -19,23 +20,19 @@
     <p>There are no cats in the library.</p>
   {% endif %}
 
-{% comment "fix and uncomment" %}
-
 {# link - add a cat #}
   <p>
-    {% if make_count > 0 %}
-      <a href="{% url 'autos:auto_create' %}">Add an auto</a>
+    {% if breeds_count > 0 %}
+      <a href="{% url 'cats:cat_create' %}">Add one more cat</a>
     {% else %}
-      Please add a make before you add an auto.
+      Please add a breed before you add cat.
     {% endif %}
   </p>
 
 {# links - view breeds/add breed #}
   <p>
-    <a href="{% url 'autos:make_list' %}">View makes</a> ({{ make_count }}) | 
-    <a href="{% url 'autos:make_create' %}">Add a make</a>
+    <a href="{% url 'cats:breeds_list' %}">View breeds</a> ({{ breeds_count }}) | 
+    <a href="{% url 'cats:breed_create' %}">Add a breed</a>
   </p>
-
-{% endcomment %}
 
 {% endblock %}
