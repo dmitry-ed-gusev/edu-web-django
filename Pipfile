@@ -7,6 +7,12 @@ name = "pypi"
 django = "*"
 django-extensions = "*"
 django-crispy-forms = "*"
+django-filter = "*"
+djangorestframework = "*"
+markdown = "*"
+django-taggit = "*"
+social-auth-app-django = "*"
+social-auth-core = "*"
 
 [dev-packages]
 ipykernel = "*"
