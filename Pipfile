@@ -13,6 +13,7 @@ markdown = "*"
 django-taggit = "*"
 social-auth-app-django = "*"
 social-auth-core = "*"
+mysqlclient = "*"
 
 [dev-packages]
 ipykernel = "*"
