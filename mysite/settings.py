@@ -104,7 +104,7 @@ DATABASES = {
     'default': {  # MySql DB on the pythonanywhere.com
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'vinnypuhh$ads',
-        'USER': 'vinnypuhh ',
+        'USER': 'vinnypuhh',
         'PASSWORD': 'dbms1234',
         'HOST': 'vinnypuhh.mysql.pythonanywhere-services.com',
         'OPTIONS': {
