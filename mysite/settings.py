@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'ships.apps.ShipsConfig',
     'autos.apps.AutosConfig',
     'cats.apps.CatsConfig',
+    'ads.apps.AdsConfig',
 
     # - django applications
     'django.contrib.admin',
@@ -101,7 +102,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
 
-    'default': {  # MySql DB on the pythonanywhere.com
+    'mysql': {  # MySql DB on the pythonanywhere.com
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'vinnypuhh$ads',
         'USER': 'vinnypuhh',
@@ -112,10 +113,10 @@ DATABASES = {
         },
     },
 
-    # 'default': {  # simple SQLite database
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
+    'default': {  # simple SQLite database
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 
 }
 
@@ -288,3 +289,28 @@ LOGGING = {
     },
 
 }
+
+# https://coderwall.com/p/uzhyca/quickly-setup-sql-query-logging-django
+# https://stackoverflow.com/questions/12027545/determine-if-django-is-running-under-the-development-server
+
+'''  # Leave off for now
+import sys
+if (len(sys.argv) >= 2 and sys.argv[1] == 'runserver'):
+    print('Running locally')
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'console': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+            }
+        },
+        'loggers': {
+            'django.db.backends': {
+                'handlers': ['console'],
+                'level': 'DEBUG',
+            },
+        }
+    }
+'''

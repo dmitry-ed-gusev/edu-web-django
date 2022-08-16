@@ -51,6 +51,7 @@ urlpatterns = [
     path('ships/', include('ships.urls')),  # /ships - application with CRUD implemented
     path('autos/', include('autos.urls')),  # /autos - CRUD app for dj4e course assessment (week #3)
     path('cats/', include('cats.urls')),  # /cats - CRUD app for dj4e course assessment (week #4)
+    path('ads/', include('ads.urls')),  # /ads - app for dj4e course assessment (week #5)
 ]
 
 # Serve the favicon - Keep for later
