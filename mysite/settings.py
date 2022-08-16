@@ -101,7 +101,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
 
-    'mysql': {  # MySql DB on the pythonanywhere.com
+    'default': {  # MySql DB on the pythonanywhere.com
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'vinnypuhh$ads',
         'USER': 'vinnypuhh ',
@@ -112,10 +112,10 @@ DATABASES = {
         },
     },
 
-    'default': {  # simple SQLite database
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    # 'default': {  # simple SQLite database
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
 
 }
 
