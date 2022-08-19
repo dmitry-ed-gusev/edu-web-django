@@ -51,11 +51,19 @@ INSTALLED_APPS = [
 
     # - extensions (django etc.)
     'django_extensions',
+
+    # 'django_faker',
+    # 'django_populate',
+
     'crispy_forms',
     'rest_framework',
     'social_django',
     'taggit',
 ]
+
+# django faker settings, more see here: https://github.com/joke2k/django-faker
+# FAKER_LOCALE = None     # settings.LANGUAGE_CODE is loaded
+# FAKER_PROVIDERS = None  # faker.DEFAULT_PROVIDERS is loaded (all)
 
 # When we get to crispy forms :) - from dj4e samples code
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

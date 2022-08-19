@@ -5,15 +5,21 @@ name = "pypi"
 
 [packages]
 django = "*"
+djangorestframework = "*"
 django-extensions = "*"
 django-crispy-forms = "*"
 django-filter = "*"
-djangorestframework = "*"
-markdown = "*"
 django-taggit = "*"
 social-auth-app-django = "*"
 social-auth-core = "*"
+markdown = "*"
 mysqlclient = "*"
+faker = "*"
+
+# django-faker = "*"
+# -- fork of the django-faker, see here: https://gitlab.com/solarliner/django-populate
+# django-populate = "*"
+
 
 [dev-packages]
 ipykernel = "*"
