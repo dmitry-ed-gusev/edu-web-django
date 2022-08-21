@@ -20,7 +20,7 @@ def autoview(request):
 class AdListView(OwnerListView):
     model = Ad
     # By convention:
-    # template_name = "ads/ads_list.html"
+    # template_name = "ads/ad_list.html"
 
 
 class AdDetailView(OwnerDetailView):

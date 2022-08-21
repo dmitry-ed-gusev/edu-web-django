@@ -33,10 +33,7 @@ def run():
 
     for counter, row in enumerate(reader):  # iterate and add cats/breeds row by row
         log.debug(f'Loading: #{counter}/{row}')
-        # print(row)
-
         b, created = Breed.objects.get_or_create(name=row[1])
-
         c = Cat(nickname=row[0], breed=b, weight=row[2])
         c.save()
 
