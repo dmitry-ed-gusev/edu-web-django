@@ -16,11 +16,6 @@ markdown = "*"
 mysqlclient = "*"
 faker = "*"
 
-# django-faker = "*"
-# -- fork of the django-faker, see here: https://gitlab.com/solarliner/django-populate
-# django-populate = "*"
-
-
 [dev-packages]
 ipykernel = "*"
 nose2 = "*"

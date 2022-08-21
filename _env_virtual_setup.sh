@@ -7,15 +7,24 @@
 #   Warning: script must be used (run) from shell, not from the virtual
 #            environment (pipenv shell).
 #
+#   See additional interesting resources:
+#     - https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
+#     - https://remarkablemark.org/blog/2020/10/31/bash-check-mac/
+#     - https://pypi.org/project/mysqlclient/
+#
 #   Created:  Dmitrii Gusev, 21.07.2022
-#   Modified:
+#   Modified: Dmitrii Gusev, 21.08.2022
 #
 ###############################################################################
 
 # -- verbose output mode
 VERBOSE="--verbose"
+
 # -- set up encoding/language
 export LANG='en_US.UTF-8'
+export SHELL_PROFILE="${HOME}/.bash_profile"
+
+# -- build directories
 BUILD_DIR='build/'
 DIST_DIR='dist/'
 
@@ -45,6 +54,26 @@ rm -r ${DIST_DIR}
 # -- removing Pipfile.lock (re-generate it)
 printf "\nRemoving Pipfile.lock\n"
 rm Pipfile.lock
+
+# -- as we need mysql client - we need to install additional libraries
+# todo: see additional resources above and implement section for linux
+if [[ $OSTYPE == 'darwin'* ]]; then
+    printf "\nWe're running on MacOS: checking for additional mysql client libraries...\n"
+    printf "Using shell profile: [%s]\n" ${SHELL_PROFILE}
+
+    # check if mysql-client libraries are installed - if not - install them
+    if ! brew list mysql-client; then
+        printf "\nLibraries for mysql-client are not installed - processing...\n"
+        brew install mysql-client "${VERBOSE}"
+        echo 'export PATH="/usr/local/opt/mysql-client/bin:$PATH"' >> "${SHELL_PROFILE}"
+        export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+        # pip install mysqlclient  # <- python mysqlclient will be installed via pipenv
+        # todo: somehow need to reboot the shell itself - otherwise it won't work...
+    else
+        printf "\nmysql-client libraries should be already installed!\n"
+    fi
+
+fi
 
 # -- install all dependencies, incl. development
 printf "\nInstalling dependencies, updating all + outdated.\n"
