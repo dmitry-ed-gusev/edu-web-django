@@ -13,7 +13,7 @@
 #     - https://pypi.org/project/mysqlclient/
 #
 #   Created:  Dmitrii Gusev, 21.07.2022
-#   Modified: Dmitrii Gusev, 21.08.2022
+#   Modified: Dmitrii Gusev, 22.08.2022
 #
 ###############################################################################
 
@@ -23,6 +23,7 @@ VERBOSE="--verbose"
 # -- set up encoding/language
 export LANG='en_US.UTF-8'
 export SHELL_PROFILE="${HOME}/.bash_profile"
+# export SHELL_PROFILE="${HOME}/.zshrc"  # user profile for the zsh
 
 # -- build directories
 BUILD_DIR='build/'
