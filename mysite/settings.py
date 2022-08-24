@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'autos.apps.AutosConfig',
     'cats.apps.CatsConfig',
     'ads.apps.AdsConfig',
+    'unesco.apps.UnescoConfig',
 
     # - django applications
     'django.contrib.admin',
@@ -51,9 +52,6 @@ INSTALLED_APPS = [
 
     # - extensions (django etc.)
     'django_extensions',
-
-    # 'django_faker',
-    # 'django_populate',
 
     'crispy_forms',
     'rest_framework',
