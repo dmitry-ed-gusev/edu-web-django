@@ -39,6 +39,7 @@ class Site(models.Model):
     description = models.TextField(null=True)
     justification = models.TextField(null=True)
     area_hectares = models.FloatField(null=True)
+    # foreign keys to lookup tables
     category = models.ForeignKey("Category", on_delete=models.CASCADE, null=True)
     region = models.ForeignKey("Region", on_delete=models.CASCADE, null=True)
     iso = models.ForeignKey("Iso", on_delete=models.CASCADE, null=True)
