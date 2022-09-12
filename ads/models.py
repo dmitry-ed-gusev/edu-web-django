@@ -34,7 +34,8 @@ class Ad(models.Model):
 
     # Shows up in the admin list
     def __str__(self):
-        return f"({self.price}$) (owner: {self.owner}) {self.title}"
+        # return f"({self.price}$) (owner: {self.owner}) {self.title}"
+        return f"{self.title}"
 
     def __repr__(self) -> str:
         return f"({self.price})$ [{self.title}] [{self.text}] [{self.owner}]"
