@@ -5,10 +5,8 @@ from . import views
 app_name = 'ads'
 
 urlpatterns = [
-
     # info view - just to proof that /cats appis working
     path('info/', views.autoview),
-
     # application urls
     path('', views.AdListView.as_view(), name='all'),
     path('ad/<int:pk>', views.AdDetailView.as_view(), name='ad_detail'),
@@ -20,6 +18,12 @@ urlpatterns = [
 
     # added picture to the Ad
     path('ad_picture/<int:pk>', views.stream_file, name='ad_picture'),
+
+    # added comments to the Ad
+    path('ad/<int:pk>/comment', views.CommentCreateView.as_view(),
+         name='ad_comment_create'),
+    path('comment/<int:pk>/delete', views.CommentDeleteView.as_view(success_url=reverse_lazy('ads')),
+         name='ad_comment_delete'),
 
 ]
 

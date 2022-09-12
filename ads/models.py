@@ -20,6 +20,10 @@ class Ad(models.Model):
     # link to the internal auth mechanism - user-owner of the item
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
+    # link to the Comments table in the app DB
+    comments = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                      through='Comment', related_name='comments_owned')
+
     # auto-populated fields
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -34,3 +38,24 @@ class Ad(models.Model):
 
     def __repr__(self) -> str:
         return f"({self.price})$ [{self.title}] [{self.text}] [{self.owner}]"
+
+
+class Comment(models.Model):
+
+    # comment text
+    text = models.TextField(validators=[MinLengthValidator(3, "Comment must be greater than 3 characters")])
+
+    # foreign keys - to auth table and to Ad table
+    ad = models.ForeignKey(Ad, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    # standard auto-populated fields
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    # Shows up in the admin list
+    def __str__(self):
+        if len(self.text) < 15:
+            return self.text
+
+        return self.text[:11] + ' ...'
