@@ -32,6 +32,10 @@ class Ad(models.Model):
     picture = models.BinaryField(null=True, editable=True)
     content_type = models.CharField(max_length=256, null=True, help_text='The MIMEType of the file')
 
+    # Favorites
+    favorites = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                       through='Fav', related_name='favorite_ads')
+
     # Shows up in the admin list
     def __str__(self):
         # return f"({self.price}$) (owner: {self.owner}) {self.title}"
@@ -60,3 +64,16 @@ class Comment(models.Model):
             return self.text
 
         return self.text[:11] + ' ...'
+
+
+class Fav(models.Model):
+
+    ad = models.ForeignKey(Ad, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    # https://docs.djangoproject.com/en/4.0/ref/models/options/#unique-together
+    class Meta:
+        unique_together = ('ad', 'user')
+
+    def __str__(self):
+        return '%s likes %s' % (self.user.username, self.ad.title[:10])
