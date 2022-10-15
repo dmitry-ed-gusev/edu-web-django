@@ -2,8 +2,7 @@ import logging
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinLengthValidator
-
-# Create your models here.
+from taggit.managers import TaggableManager
 
 log = logging.getLogger(__name__)
 
@@ -11,11 +10,13 @@ log = logging.getLogger(__name__)
 class Ad(models.Model):
 
     # usual fields
-    title = models.CharField(
-            max_length=200,
-            validators=[MinLengthValidator(2, "Title must be greater than 2 characters")])
+    title = models.CharField(max_length=200,
+                             validators=[MinLengthValidator(2, "Title must be greater than 2 characters")])
     text = models.TextField()
     price = models.DecimalField(max_digits=7, decimal_places=2, null=True)
+
+    # https://django-taggit.readthedocs.io/en/latest/api.html#TaggableManager
+    tags = TaggableManager(blank=True)
 
     # link to the internal auth mechanism - user-owner of the item
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

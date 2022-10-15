@@ -33,6 +33,15 @@
 {% endif %}
 </span>
 <h1>{{ ad.title }}</h1>
+
+{% if ad.tags.all %}
+<p>Tags: 
+  {% for tag in ad.tags.all %}
+    <span style="border:1px grey solid; background-color: LightGreen;">{{ tag }}</span>
+  {% endfor %}
+</p>
+{% endif %}
+
 <p>
 {{ ad.text }}
 </p>

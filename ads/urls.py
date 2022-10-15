@@ -7,6 +7,7 @@ app_name = 'ads'
 urlpatterns = [
     # info view - just to proof that /cats appis working
     path('info/', views.autoview),
+
     # application urls
     path('', views.AdListView.as_view(), name='all'),
     path('ad/<int:pk>', views.AdDetailView.as_view(), name='ad_detail'),

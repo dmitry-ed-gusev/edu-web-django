@@ -2,12 +2,28 @@ import logging
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.humanize.templatetags.humanize import naturaltime
 
 from ads.models import Ad, Comment, Fav
 from ads.forms import CreateForm, CommentForm
 from ads.owner import OwnerListView, OwnerDetailView, OwnerDeleteView, OwnerUpdateView, OwnerCreateView
+
+# todo: References
+# todo: https://docs.djangoproject.com/en/3.0/topics/db/queries/#one-to-many-relationships
+
+# todo: Note that the select_related() QuerySet method recursively prepopulates the
+# todo: cache of all one-to-many relationships ahead of time.
+
+# todo: sql “LIKE” equivalent in django query
+# todo: https://stackoverflow.com/questions/18140838/sql-like-equivalent-in-django-query
+
+# todo: How do I do an OR filter in a Django query?
+# todo: https://stackoverflow.com/questions/739776/how-do-i-do-an-or-filter-in-a-django-query
+
+# todo: https://stackoverflow.com/questions/1074212/how-can-i-see-the-raw-sql-queries-django-is-running
 
 log = logging.getLogger(__name__)
 
@@ -24,19 +40,40 @@ class AdListView(OwnerListView):
     # By convention:
     template_name = "ads/ad_list.html"
 
-    # todo: remove!
-    # model = Thing
-    # template_name = "favs/list.html"
-
     def get(self, request):
-        ad_list = Ad.objects.all()
+        log.debug("AD List View: is working.")
+
+        strval = request.GET.get("search", False)
+        log.debug(f"Search string: {strval}")
+
+        # get list of Ad objects from DB
+        if strval:  # there is non-empty search string
+            # Simple title-only search (one field)
+            # ad_list = Ad.objects.filter(title__contains=strval) \
+            #                     .select_related().order_by('-updated_at')[:10]
+
+            # Multi-field search (several fields)
+            # __icontains for case-insensitive search
+            query = Q(title__icontains=strval)
+            query.add(Q(text__icontains=strval), Q.OR)
+            query.add(Q(tags__name__in=[strval]), Q.OR)
+            ad_list = Ad.objects.filter(query).select_related().order_by('-updated_at')[:10]
+        else:  # no search string - provide the full list
+            ad_list = Ad.objects.all().order_by('-updated_at')[:10]
+
+        # Augment the post_list (update all objects in the list - set natural time)
+        for ad in ad_list:
+            ad.natural_updated = naturaltime(ad.updated_at)
+
         favorites = list()
         if request.user.is_authenticated:
             # rows = [{'id': 2}, {'id': 4} ... ]  (A list of rows)
             rows = request.user.favorite_ads.values('id')
             # favorites = [2, 4, ...] using list comprehension
             favorites = [row['id'] for row in rows]
-        ctx = {'ad_list': ad_list, 'favorites': favorites}
+
+        # creating the context for the page: list of ADs (limited by search), favorites, search string
+        ctx = {'ad_list': ad_list, 'favorites': favorites, 'search': strval}
 
         return render(request, self.template_name, ctx)
 
@@ -73,6 +110,10 @@ class AdCreateView(LoginRequiredMixin, View):
         pic = form.save(commit=False)
         pic.owner = self.request.user
         pic.save()
+
+        # https://django-taggit.readthedocs.io/en/latest/forms.html#commit-false
+        form.save_m2m()
+
         return redirect(self.success_url)
 
 
@@ -96,6 +137,9 @@ class AdUpdateView(LoginRequiredMixin, View):
 
         pic = form.save(commit=False)
         pic.save()
+
+        # https://django-taggit.readthedocs.io/en/latest/forms.html#commit-false
+        form.save_m2m()
 
         return redirect(self.success_url)
 
